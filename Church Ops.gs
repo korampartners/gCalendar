@@ -34,7 +34,8 @@ function updateCalendarOps() {
     if (date && event) {
       var eventDate = parseDate(year, date);
       
-      if (eventDate) {
+      // Only add events if date is equal to or newer than startDate
+      if (eventDate && eventDate >= startDate) {
         var description = "";
         Logger.log(`Adding ${event} on ${eventDate}`);
         if (actionItems) {
@@ -54,6 +55,8 @@ function updateCalendarOps() {
         }
 
         Logger.log(`Added Event : ${event} on ${eventDate}`);
+      } else if (eventDate) {
+        Logger.log(`Skipped event as date is before startDate: ${event} on ${eventDate}`);
       } else {
         Logger.log(`Skipped event due to invalid date: ${event} (${date})`);
       }
